@@ -19,9 +19,9 @@ body {
   text-align: center;
 }
 
-/* First Section: Information */
+/* First Section: Informatioi hn */
 .info-section {
-  background: url('1.png') no-repeat center center;
+  background: url('/Earthquake-Simulator/1.png') no-repeat center center;
   background-size: cover;
 }
 
@@ -39,7 +39,7 @@ body {
 
 /* Content Section */
 .content-section {
-  background: url('2.png') no-repeat center center fixed;
+  background: url('/Earthquake-Simulator/2.png') no-repeat center center fixed;
   background-size: cover;
   padding: 50px 20px;
 }
