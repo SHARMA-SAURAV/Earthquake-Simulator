@@ -1,0 +1,110 @@
+/* General styling */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  color: black;
+  background-color: black;
+}
+
+/* Fullscreen sections */
+.section {
+  height: 100vh; /* Full screen height */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* First Section: Information */
+.info-section {
+  background: url('1.png') no-repeat center center;
+  background-size: cover;
+}
+
+.info-section h1 {
+  font-size: 3em;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+  margin-bottom: 10px;
+}
+
+.info-section p {
+  font-size: 1.5em;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+  max-width: 800px;
+}
+
+/* Content Section */
+.content-section {
+  background: url('2.png') no-repeat center center fixed;
+  background-size: cover;
+  padding: 50px 20px;
+}
+
+.content-container {
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+/* Left and Right Columns */
+.left-column,
+.right-column {
+  width: 48%;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.right-column label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1.2em;
+}
+
+/* Inputs and buttons */
+input,
+button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+input {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Map Section */
+.map-section {
+  margin-top: 30px;
+}
+
+#map {
+  height: 600px;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+}
