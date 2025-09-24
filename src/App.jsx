@@ -1,121 +1,165 @@
-import React, { useState } from 'react';
-import EarthquakeSimulation from './components/EarthquakeSimulation';
-import MapViewer from './components/MapViewer';
+// import React from "react";
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import DisasterSelector from "./components/DisasterSelector";
+// import EarthquakePage from "./pages/EarthquakePage";
+// import FloodPage from "./pages/FloodPage";
+// import "./app.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
-const App = () => {
-  const [simulateEarthquake, setSimulateEarthquake] = useState(false);
-  const [magnitude, setMagnitude] = useState(5);
-  const [inputMode, setInputMode] = useState('coordinates'); // 'coordinates' or 'place'
-  const [location, setLocation] = useState({ lat: null, lng: null, name: '' });
-  const [error, setError] = useState('');
+// const App = () => {
+//   return (
+//     <Router>
+//       <div className="d-flex flex-column min-vh-100 w-100">
+//         {/* Header */}
+//         <header className="py-2 bg-primary text-white text-center shadow-sm">
+//           <h2 className="m-0 fw-bold">🌍 Natural Disaster Simulation</h2>
+//           <p className="m-0 small text-white-50">
+//             Simulate and visualize disasters with interactive maps
+//           </p>
+//         </header>
 
-  const geocodeLocation = async (placeName) => {
-    const apiKey = 'e22205f37ea44f4fb9a3931c3a6d47f5'; // Replace with OpenCage API key
-    try {
-      const response = await fetch(
-        `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(placeName)}&key=${apiKey}`
-      );
-      if (!response.ok) throw new Error('Failed to fetch geolocation data.');
+//         {/* Dropdown always visible */}
+//         <div className="py-3 bg-white border-bottom shadow-sm">
+//           <div className="container-fluid px-4">
+//             <DisasterSelector />
+//           </div>
+//         </div>
 
-      const data = await response.json();
-      if (data.results && data.results.length > 0) {
-        const { lat, lng } = data.results[0].geometry;
-        setLocation({ lat, lng, name: placeName });
-        setError('');
-      } else {
-        throw new Error('Location not found.');
-      }
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+//         {/* Pages */}
+//         <main className="flex-fill w-100 d-flex">
+//           <Routes>
+//             <Route
+//               path="/"
+//               element={
+//                 <div className="d-flex justify-content-center align-items-center w-100">
+//                   <h4 className="text-center text-muted">
+//                     Please select a disaster to simulate ⬆️
+//                   </h4>
+//                 </div>
+//               }
+//             />
+//             <Route path="/earthquake" element={<EarthquakePage />} />
+//             <Route path="/flood" element={<FloodPage />} />
+//           </Routes>
+//         </main>
 
-  const handleSimulate = () => {
-    if (inputMode === 'coordinates' && (!location.lat || !location.lng)) {
-      setError('Please provide valid latitude and longitude.');
-    } else if (inputMode === 'place' && !location.name) {
-      setError('Please provide a valid place name.');
-    } else {
-      setError('');
-      setSimulateEarthquake(true);
-    }
-  };
+//         {/* Footer */}
+//         <footer className="bg-dark text-white text-center py-3 mt-auto shadow-sm w-100">
+//           <small>
+//             © 2025 Disaster Simulation App | Built with OSM leaflet and React
+//           </small>
+//         </footer>
+//       </div>
+//     </Router>
+//   );
+// };
 
-  const toggleInputMode = () => {
-    setInputMode((prev) => (prev === 'coordinates' ? 'place' : 'coordinates'));
-    setLocation({ lat: null, lng: null, name: '' });
-    setError('');
-  };
+// export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import DisasterSelector from "./components/DisasterSelector";
+import EarthquakePage from "./pages/EarthquakePage";
+import FloodPage from "./pages/FloodPage";
+import "./app.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+const AppContent = () => {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
   return (
-    <div>
-      <div className="section info-section">
-        {/* <h1>Welcome to Earthquake Simulation</h1>
-        <p>
-          Simulate earthquake scenarios by providing specific location details or choosing a place
-          by name. Analyze the affected zones and prepare evacuation routes.
-        </p> */}
+    <div className="d-flex flex-column min-vh-100 w-100">
+      {/* Header */}
+      <header className="py-3 bg-gradient text-white text-center shadow-sm" 
+              style={{ 
+                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" 
+              }}>
+        <h2 className="m-0 fw-bold">🌍 Natural Disaster Simulation</h2>
+        <p className="m-0 small opacity-75">
+          Simulate and visualize disasters with interactive maps
+        </p>
+      </header>
+
+      {/* Disaster Selector - Always visible */}
+      <div className="py-4 bg-light border-bottom shadow-sm">
+        <div className="container-fluid px-4">
+          <DisasterSelector />
+        </div>
       </div>
 
-      {/* Second Section */}
-      <div className="content-section">
-        <div className="content-container">
-          {/* Left Column: Earthquake Simulation */}
-          <div className="left-column">
-            <EarthquakeSimulation
-              simulateEarthquake={simulateEarthquake}
-              setSimulateEarthquake={setSimulateEarthquake}
-              magnitude={magnitude}
-              setMagnitude={setMagnitude}
-            />
-          </div>
-
-          {/* Right Column: Location Inputs */}
-          <div className="right-column">
-            {inputMode === 'coordinates' ? (
-              <div>
-                <label>Latitude:</label>
-                <input
-                  type="number"
-                  placeholder="Enter Latitude"
-                  onChange={(e) => setLocation({ ...location, lat: parseFloat(e.target.value) })}
-                />
-                <label>Longitude:</label>
-                <input
-                  type="number"
-                  placeholder="Enter Longitude"
-                  onChange={(e) => setLocation({ ...location, lng: parseFloat(e.target.value) })}
-                />
+      {/* Main Content */}
+      <main className={`flex-fill w-100 d-flex ${isHomePage ? 'align-items-center justify-content-center' : ''}`}>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div className="text-center p-5">
+                <div className="mb-4">
+                  <i className="fas fa-globe-americas" style={{ fontSize: "4rem", color: "#667eea" }}></i>
+                </div>
+                <h3 className="text-muted mb-3">Welcome to Disaster Simulation</h3>
+                <p className="text-secondary mb-4" style={{ maxWidth: "500px", margin: "0 auto" }}>
+                  Select a natural disaster from the dropdown above to begin your interactive simulation. 
+                  Visualize earthquake zones, flood patterns, and evacuation routes in real-time.
+                </p>
+                <div className="d-flex justify-content-center gap-4 mt-4">
+                  <div className="text-center">
+                    <div className="bg-primary bg-opacity-10 rounded-circle p-3 mb-2" style={{ width: "60px", height: "60px", margin: "0 auto" }}>
+                      🌋
+                    </div>
+                    <small className="text-muted">Earthquake<br/>Simulation</small>
+                  </div>
+                  <div className="text-center">
+                    <div className="bg-info bg-opacity-10 rounded-circle p-3 mb-2" style={{ width: "60px", height: "60px", margin: "0 auto" }}>
+                      🌊
+                    </div>
+                    <small className="text-muted">Flood<br/>Simulation</small>
+                  </div>
+                </div>
               </div>
-            ) : (
-              <div>
-                <label>Place Name:</label>
-                <input
-                  type="text"
-                  placeholder="Enter Place Name"
-                  onChange={(e) => setLocation({ ...location, name: e.target.value })}
-                />
-                <button onClick={() => geocodeLocation(location.name)}>Geocode</button>
-              </div>
-            )}
-            <button onClick={toggleInputMode}>
-              {inputMode === 'coordinates' ? 'Switch to Place Name' : 'Switch to Coordinates'}
-            </button>
-            <button onClick={handleSimulate}>Simulate Earthquake</button>
-            {error && <p className="error">{error}</p>}
-          </div>
-        </div>
-
-        {/* Map Section */}
-        <div className="map-section">
-          <MapViewer
-            simulateEarthquake={simulateEarthquake}
-            magnitude={magnitude}
-            location={location}
+            }
           />
-        </div>
-      </div>
+          <Route path="/earthquake" element={<EarthquakePage />} />
+          <Route path="/flood" element={<FloodPage />} />
+        </Routes>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-dark text-white text-center py-3 mt-auto shadow-sm w-100">
+        <small>
+          © 2025 Disaster Simulation App | Built with OSM Leaflet and React
+        </small>
+      </footer>
     </div>
+  );
+};
+
+const App = () => {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
   );
 };
 

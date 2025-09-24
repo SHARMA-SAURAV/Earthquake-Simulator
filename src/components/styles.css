@@ -21,8 +21,14 @@ body {
 
 /* First Section: Informatioi hn */
 .info-section {
-  background: url('/Earthquake-Simulator/1.png') no-repeat center center;
+  background: url('1.png') no-repeat center center;
   background-size: cover;
+}
+
+.content-section {
+  background: url('2.png') no-repeat center center fixed;
+  background-size: cover;
+  padding: 50px 20px;
 }
 
 .info-section h1 {
@@ -38,11 +44,11 @@ body {
 }
 
 /* Content Section */
-.content-section {
-  background: url('/Earthquake-Simulator/2.png') no-repeat center center fixed;
+/* .content-section {
+  background: url('/Earthquake-Simulator2.png') no-repeat center center fixed;
   background-size: cover;
   padding: 50px 20px;
-}
+} */
 
 .content-container {
   width: 80%;
@@ -107,4 +113,25 @@ button:hover {
   width: 100%;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+}
+
+
+/* Hide Leaflet Routing Machine default directions container */
+.leaflet-routing-container-hide {
+  display: none !important;
+}
+
+/* Hide the toggle button for directions panel */
+.leaflet-routing-container-toggle {
+  display: none !important;
+}
+
+/* Optional: Hide any alternatives container (if using alternative routes UI) */
+.leaflet-routing-alternatives-container {
+  display: none !important;
+}
+
+/* Optional: Hide any custom printing or overview controls */
+.leaflet-routing-print-container {
+  display: none !important;
 }
